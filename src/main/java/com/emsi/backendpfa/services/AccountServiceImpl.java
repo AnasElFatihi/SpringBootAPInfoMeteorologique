@@ -37,7 +37,6 @@ public class AccountServiceImpl implements AccountService {
 
         appUserRepository.save(appUser);
         addRoleToUser(username,"USER");
-        addRoleToUser(username,"ADMIN");
         return appUser;
     }
 
