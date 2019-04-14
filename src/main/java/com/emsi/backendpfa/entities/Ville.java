@@ -4,34 +4,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-
-public class Region  {
+public class Ville {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String nom;
+    private String name;
+    private double latitude;
+    private double longitude;
 
-
-    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
-    private Collection<AppUser> users = new ArrayList<>();
-
-    @ManyToOne
-    @JoinColumn
-    private Ville ville;
+    @OneToMany(mappedBy = "ville", cascade = CascadeType.ALL)
+    private Collection<Region> regions = new ArrayList<>();
 
 }
