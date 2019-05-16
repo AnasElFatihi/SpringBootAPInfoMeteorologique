@@ -24,19 +24,24 @@ public class VilleController {
         return villeService.getAll();
     }
 
+    @GetMapping("/{id}")
+    public Ville getVille(@PathVariable long id){
+        return villeService.findById(id);
+    }
     @PostMapping("/villes")
     public Ville saveVille(@RequestBody Ville ville){
 
         villeService.saveVille(ville);
         return villeService.findById(ville.getId());
     }
-    @PutMapping("/villes/{id}")
+    @PutMapping("/{id}")
     public Ville updateVille(@RequestBody Ville ville, @PathVariable long id)
     {
+        System.out.println(ville);
         return villeService.updateVille(ville,id);
     }
 
-    @DeleteMapping("/villes/{id}")
+    @DeleteMapping("/{id}")
     public void deleteVille(@PathVariable long  id){
         villeService.deleteVille(id);
     }
