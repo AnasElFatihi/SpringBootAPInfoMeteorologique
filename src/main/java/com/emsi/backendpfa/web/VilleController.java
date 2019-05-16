@@ -37,6 +37,7 @@ public class VilleController {
     @PutMapping("/{id}")
     public Ville updateVille(@RequestBody Ville ville, @PathVariable long id)
     {
+        System.out.println(ville);
         return villeService.updateVille(ville,id);
     }
 

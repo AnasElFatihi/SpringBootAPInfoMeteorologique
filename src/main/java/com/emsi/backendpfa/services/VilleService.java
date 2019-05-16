@@ -47,6 +47,7 @@ public class VilleService {
         villeEx.setLongitude(ville.getLongitude());
         villeEx.setRegions(ville.getRegions());
         villeRepository.save(villeEx);
+
         return villeEx;
     }
 }
