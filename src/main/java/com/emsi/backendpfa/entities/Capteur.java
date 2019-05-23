@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -23,6 +25,15 @@ public class Capteur {
     // @ManyToOne
     @JoinColumn
     private  String region;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+               cascade = {
+        CascadeType.PERSIST,
+                CascadeType.MERGE
+    },
+    mappedBy = "capteurs")
+    private Set<Mesure> mesures = new HashSet<>();
+
 
     public long getIdcapt() {
         return idcapt;
