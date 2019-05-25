@@ -1,18 +1,14 @@
 package com.emsi.backendpfa.web;
 
-import com.emsi.backendpfa.dao.AppRoleRepository;
-import com.emsi.backendpfa.dao.AppUserRepository;
 import com.emsi.backendpfa.dao.RegionRepository;
-import com.emsi.backendpfa.entities.AppUser;
 import com.emsi.backendpfa.entities.Region;
+import com.emsi.backendpfa.entities.Ville;
 import com.emsi.backendpfa.services.RegionService;
+import com.emsi.backendpfa.services.VilleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 
@@ -20,38 +16,36 @@ import java.util.Optional;
 public class RegionController {
 
     @Autowired
-    private RegionService regionService;
-
-    @Autowired
     private RegionRepository regionRepository;
 
     @Autowired
-    private AppUserRepository appUserRepository;
-    @GetMapping(value="/all")
+    private RegionService regionService;
+    @Autowired
+    private VilleService villeService;
+
+    @GetMapping("/all")
     public List<Region> getAll(){
         return regionService.getAll();
     }
 
-    @GetMapping(value="/test")
-    public Region hello(){
-        System.out.println("hi");
-        Region a = new Region(  );
-        regionRepository.save(a);
-        Region  region = regionRepository.findById(Long.valueOf(1)).get();
+    @PostMapping("/{id}")
+    public Region saveRegion(@RequestBody Region region, @PathVariable long  id){
+        Ville ville = villeService.findById(id);
+        region.setVille(ville);
         System.out.println(region);
-        List<AppUser> users = appUserRepository.findAll();
-        System.out.println(users);
-        region.setUsers(users);
+        return regionService.saveRegion(region);
 
 
-        return region;
+    }
+    @PutMapping("/{id}")
+    public Region updateRegion(@RequestBody Region region, @PathVariable long id)
+    {
+        return regionService.updateRegion(region,id);
     }
 
-    @PostMapping("/regions")
-    public Optional<Region> saveRegion(@RequestBody final Region  region)
-    {
-         regionService.saveRegion(region);
-         return regionService.findByID(region.getId());
+    @DeleteMapping("/{id}")
+    public void deleteRegion(@PathVariable long  id){
+        regionService.deleteRegion(id);
     }
 
 }
