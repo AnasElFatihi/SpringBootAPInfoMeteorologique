@@ -49,7 +49,7 @@ public class BackendpfaApplication {
             accountService.save( new AppRole(1,"USER"));
             accountService.save( new AppRole(2,"ADMIN"));
             accountService.save( new AppRole(3,"RESPONSABLE"));
-            mesureService.savemesure();
+            //mesureService.savemesure();
 
             Stream.of("user1","user2","user3","admin").forEach( un -> {
                 accountService.saveUser(un ,"1234","1234");
