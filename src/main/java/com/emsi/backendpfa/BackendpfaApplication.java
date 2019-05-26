@@ -1,10 +1,7 @@
 package com.emsi.backendpfa;
 
 import com.emsi.backendpfa.entities.*;
-import com.emsi.backendpfa.services.AccountService;
-import com.emsi.backendpfa.services.MesureService;
-import com.emsi.backendpfa.services.RegionService;
-import com.emsi.backendpfa.services.VilleService;
+import com.emsi.backendpfa.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -32,11 +29,7 @@ public class BackendpfaApplication {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public MesureService a()
-    {
-        return new MesureService();
-    }
+
     @Bean
     CommandLineRunner start(AccountService accountService,MesureService mesureService){
 
@@ -53,8 +46,9 @@ public class BackendpfaApplication {
 
             Stream.of("user1","user2","user3","admin").forEach( un -> {
                 accountService.saveUser(un ,"1234","1234");
-            });
 
+            });
+            accountService.addRoleToUser("admin","ADMIN");
 
 
 

@@ -47,5 +47,8 @@ public class RegionController {
     public void deleteRegion(@PathVariable long  id){
         regionService.deleteRegion(id);
     }
-
+    @GetMapping("/anas")
+    public Region gettest(){
+        return regionRepository.findById((long)1).get();
+    }
 }

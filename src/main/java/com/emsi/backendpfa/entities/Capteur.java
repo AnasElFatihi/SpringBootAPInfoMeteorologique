@@ -26,13 +26,8 @@ public class Capteur {
     @JoinColumn
     private  String region;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "capteurs")
-    private Set<Mesure> mesures = new HashSet<>();
+    @OneToMany(mappedBy = "capteur")
+    private Set<CapteurMesure> capteursmesures = new HashSet<>();
 
 
 

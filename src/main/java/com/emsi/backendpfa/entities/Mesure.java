@@ -1,5 +1,6 @@
 package com.emsi.backendpfa.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,13 +23,10 @@ public class Mesure {
     private String mesure;
     private String typevaleur;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "mesure", cascade = CascadeType.ALL)
+    private Set<Notification> notifications = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(joinColumns = { @JoinColumn(name = "mesure_id") },
-            inverseJoinColumns = { @JoinColumn(name = "capteur_id") })
-    private Set<Capteur> capteurs = new HashSet<>();
+    @OneToMany(mappedBy = "mesure" )
+    private Set<CapteurMesure> capteursmesures = new HashSet<>();
 }
