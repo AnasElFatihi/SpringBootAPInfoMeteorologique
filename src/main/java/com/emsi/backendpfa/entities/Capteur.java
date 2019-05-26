@@ -1,4 +1,5 @@
 package com.emsi.backendpfa.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,14 +23,16 @@ public class Capteur {
     private String dateinstall ;
     private String marque;
 
-    // @ManyToOne
     @JoinColumn
     private  String region;
 
-
-
-    @OneToMany(mappedBy = "capteur")
-    private Set<CapteurMesure> joined = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "capteurs")
+    private Set<Mesure> mesures = new HashSet<>();
 
 
 

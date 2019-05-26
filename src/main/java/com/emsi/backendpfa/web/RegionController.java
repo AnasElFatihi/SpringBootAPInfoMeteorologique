@@ -32,11 +32,11 @@ public class RegionController {
     public Region saveRegion(@RequestBody Region region, @PathVariable long  id){
         Ville ville = villeService.findById(id);
         region.setVille(ville);
-        System.out.println(region);
+        System.out.println(region.getVille());
         return regionService.saveRegion(region);
 
-
     }
+
     @PutMapping("/{id}")
     public Region updateRegion(@RequestBody Region region, @PathVariable long id)
     {

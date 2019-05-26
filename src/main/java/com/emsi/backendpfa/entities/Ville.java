@@ -31,7 +31,7 @@ public class Ville {
 
     @JsonIgnore
     @OneToMany(mappedBy = "ville", cascade = CascadeType.ALL)
-    private List<Region> regions = new ArrayList<>();
+    private Set<Region> regions = new HashSet<>();
 
     /*
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true ,  mappedBy = "ville")

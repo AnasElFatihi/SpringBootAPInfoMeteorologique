@@ -1,10 +1,7 @@
 package com.emsi.backendpfa.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.OnDelete;
@@ -17,10 +14,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 
 public class Region  {
     @Id
@@ -34,12 +32,15 @@ public class Region  {
 
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
     private Collection<AppUser> users = new ArrayList<>();
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+   // @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ville_id")
     private Ville ville;
 
 
+    //@JsonIgnore
+    //@OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
+    //private Set<Capteur> capteurs = new HashSet<>();
     /*
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JsonIgnore

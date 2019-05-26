@@ -23,6 +23,12 @@ public class Mesure {
     private String typevaleur;
 
 
-    @OneToMany(mappedBy = "mesure")
-    private Set<CapteurMesure> joined = new HashSet<CapteurMesure>();
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(joinColumns = { @JoinColumn(name = "mesure_id") },
+            inverseJoinColumns = { @JoinColumn(name = "capteur_id") })
+    private Set<Capteur> capteurs = new HashSet<>();
 }
