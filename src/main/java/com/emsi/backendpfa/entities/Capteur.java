@@ -26,7 +26,8 @@ public class Capteur {
     @JoinColumn
     private  String region;
 
-    @OneToMany(mappedBy = "capteur")
+    @JsonIgnore
+    @OneToMany(mappedBy = "capteur",cascade = CascadeType.ALL)
     private Set<CapteurMesure> capteursmesures = new HashSet<>();
 
 

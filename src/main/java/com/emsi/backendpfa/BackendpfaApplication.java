@@ -34,10 +34,6 @@ public class BackendpfaApplication {
     CommandLineRunner start(AccountService accountService,MesureService mesureService){
 
 
-
-
-
-
         return args->{
             accountService.save( new AppRole(1,"USER"));
             accountService.save( new AppRole(2,"ADMIN"));

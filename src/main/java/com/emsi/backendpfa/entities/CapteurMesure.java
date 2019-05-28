@@ -31,11 +31,11 @@ public class CapteurMesure {
         private Date date;
 
 
-        @ManyToOne(cascade = CascadeType.ALL)
+        @ManyToOne
         @JoinColumn(name = "capteur_id")
         private Capteur capteur;
 
-        @ManyToOne(cascade = CascadeType.ALL)
+        @ManyToOne
         @JoinColumn(name = "mesure_id")
         private Mesure mesure;
 
