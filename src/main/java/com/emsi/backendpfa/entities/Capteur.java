@@ -30,7 +30,8 @@ public class Capteur {
 
 
 
-    @OneToMany(mappedBy = "capteur")
+    @JsonIgnore
+    @OneToMany(mappedBy = "capteur",cascade = CascadeType.ALL)
     private Set<CapteurMesure> capteursmesures = new HashSet<>();
 
 

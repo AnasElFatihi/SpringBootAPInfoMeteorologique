@@ -27,6 +27,7 @@ public class Mesure {
     @OneToMany(mappedBy = "mesure", cascade = CascadeType.ALL)
     private Set<Notification> notifications = new HashSet<>();
 
-    @OneToMany(mappedBy = "mesure" )
+    @JsonIgnore
+    @OneToMany(mappedBy = "mesure" , cascade = CascadeType.ALL)
     private Set<CapteurMesure> capteursmesures = new HashSet<>();
 }
