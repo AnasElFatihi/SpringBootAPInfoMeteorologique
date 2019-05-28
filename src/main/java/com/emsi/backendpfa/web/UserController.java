@@ -1,13 +1,20 @@
 package com.emsi.backendpfa.web;
 
 import com.emsi.backendpfa.entities.AppUser;
+import com.emsi.backendpfa.entities.Region;
 import com.emsi.backendpfa.entities.Ville;
 import com.emsi.backendpfa.services.AccountService;
 import com.emsi.backendpfa.services.AccountServiceImpl;
+import com.emsi.backendpfa.services.RegionService;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.List;
 
 @RestController
@@ -20,6 +27,9 @@ public class UserController {
     @Autowired
     private AccountServiceImpl accountServiceimpl;
 
+    @Autowired
+    private RegionService regionService;
+
     @PostMapping("/register")
     public AppUser register(@RequestBody UserForm user){
         return accountService.saveUser(user.getUsername(),user.getPassword(),user.getRepassword());
@@ -30,6 +40,13 @@ public class UserController {
         return accountServiceimpl.getAll();
     }
 
+
+    @GetMapping("/{id}")
+    public AppUser getUser(@PathVariable long id){
+        return accountServiceimpl.findById(id);   //
+    }
+
+
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable long  id){
         accountServiceimpl.deleteUser(id);
@@ -38,18 +55,13 @@ public class UserController {
     @PutMapping("/{id}")
     public AppUser updateUser(@RequestBody AppUser user, @PathVariable long id)
     {
-
         return accountServiceimpl.updateUser(user,id);
     }
 
-    @GetMapping("/{id}")
-    public AppUser getUser(@PathVariable long id){
-        return accountServiceimpl.findById(id);   //
-    }
 
-    @PostMapping("/registerresponsable")
-    public AppUser registerResponsable(@RequestBody UserForm user){
-        return accountService.saveUserR(user.getUsername(),user.getPassword(),user.getRepassword());
+    @PostMapping("/registerresponsable/{id}")
+    public AppUser registerResponsable(@RequestBody UserForm user, @PathVariable long id){
+        return accountService.saveUserR(user.getUsername(),user.getPassword(),user.getRepassword(),id);
     }
 }
 
@@ -58,4 +70,6 @@ class UserForm{
     private String username;
     private String password;
     private String repassword;
+
+
 }

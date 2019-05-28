@@ -25,7 +25,6 @@ public class BackendpfaApplication {
         SpringApplication.run(BackendpfaApplication.class, args);
     }
 
-
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder()
     {
@@ -40,11 +39,6 @@ public class BackendpfaApplication {
     @Bean
     CommandLineRunner start(AccountService accountService,MesureService mesureService){
 
-
-
-
-
-
         return args->{
             accountService.save( new AppRole(1,"USER"));
             accountService.save( new AppRole(2,"ADMIN"));
@@ -54,9 +48,6 @@ public class BackendpfaApplication {
             Stream.of("user1","user2","user3","admin").forEach( un -> {
                 accountService.saveUser(un ,"1234","1234");
             });
-
-
-
 
         };
     }

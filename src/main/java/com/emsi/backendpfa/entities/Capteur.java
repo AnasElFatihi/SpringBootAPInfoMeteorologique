@@ -1,19 +1,18 @@
 package com.emsi.backendpfa.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+//@ToString
 public class Capteur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +22,13 @@ public class Capteur {
     private String dateinstall ;
     private String marque;
 
-    @JoinColumn
-    private  String region;
+    //@JoinColumn
+    //private  String region;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    private Region region;
+
+
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {

@@ -16,5 +16,5 @@ public interface AccountService
 
     List<AppUser> getAll();
 
-    AppUser saveUserR(String username, String password, String repassword);
+    AppUser saveUserR(String username, String password, String repassword, long id);
 }

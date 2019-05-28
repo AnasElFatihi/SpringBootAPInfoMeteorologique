@@ -20,7 +20,7 @@ public class CapteurService {
 
 
     public Capteur saveCapteur(Capteur capteur){
-        Capteur a = new Capteur();
+       /* Capteur a = new Capteur();
         a.setLibelle(capteur.getLibelle());
         a.setEtat(capteur.getEtat());
         a.setDateinstall(capteur.getDateinstall());
@@ -29,6 +29,9 @@ public class CapteurService {
         capteurRepository.save(a);
         System.out.println(capteurRepository.findById(a.getIdcapt()).get());
         return a;
+        */
+        return capteurRepository.save(capteur);
+
     }
 
     public List<Capteur> getAll(){
@@ -45,6 +48,15 @@ public class CapteurService {
     }
 
     public Capteur updateCapteur(Capteur capteur, long id){
+       /*
+        Capteur capteurEx = capteurRepository.getOne(id);
+        capteurEx.setLibelle(capteur.getLibelle());
+        capteurEx.setEtat(capteur.getEtat());
+        capteurEx.setDateinstall(capteur.getDateinstall());
+        capteurEx.setMarque(capteur.getMarque());
+        capteurEx.setRegion(capteur.getRegion());
+        return capteurEx;
+        */
         Capteur capteurEx = capteurRepository.getOne(id);
         capteurEx.setLibelle(capteur.getLibelle());
         capteurEx.setEtat(capteur.getEtat());
@@ -52,6 +64,9 @@ public class CapteurService {
         capteurEx.setMarque(capteur.getMarque());
         capteurEx.setRegion(capteur.getRegion());
 
+        //regionEx.setVille(region.getVille());
+        capteurRepository.save(capteurEx);
+        System.out.println(capteurRepository.findById(capteurEx.getIdcapt()).get());
         return capteurEx;
     }
 }
