@@ -6,6 +6,7 @@ import com.emsi.backendpfa.dao.CapteurRepository;
 import com.emsi.backendpfa.dao.MesureRepository;
 import com.emsi.backendpfa.entities.Capteur;
 import com.emsi.backendpfa.entities.CapteurMesure;
+import com.emsi.backendpfa.entities.Notification;
 import com.emsi.backendpfa.services.CapteurMesureService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
@@ -24,6 +25,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/capteursmesures")
@@ -39,50 +41,39 @@ public class CapteurMesureController {
     private CapteurMesureRepository capteurMesureRepository;
 
     @PostMapping
-     public List<Capteur> saveCSV(@RequestBody String data) throws ParseException {
+     public List<Notification> saveCSV(@RequestBody String data) throws ParseException {
 
         JSONObject jsonObj = new JSONObject(data);
-        JSONArray a= (JSONArray) jsonObj.get("data");
+        JSONArray a = (JSONArray) jsonObj.get("data");
 
-        List<CapteurMesure> maliste = new ArrayList<>();
+
+        List<Notification> maliste = new ArrayList<>();
 
         for (int i = 0; i < a.length(); i++) {
-            JSONObject j= (JSONObject) a.get(i);
+            JSONObject j = (JSONObject) a.get(i);
 
             CapteurMesure c = new CapteurMesure();
             DateFormat df = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
-            Date result =  df.parse(j.getString("date"));
+            Date result = df.parse(j.getString("date"));
             c.setDate(result);
             c.setValeur(j.getDouble("valeur"));
             c.setMesure(mesureRepository.findById(j.getLong("idmesure")).get());
             c.setCapteur(capteurRepository.findById(j.getLong("idcapteur")).get());
             capteurMesureRepository.save(c);
-            maliste.add(c);
+
+
+            for (Notification n : c.getMesure().getNotifications()) {
+                String message = n.getMessage();
+                Double seuilmin = n.getSeuilmin();
+                Double seuilmax = n.getSeuilmax();
+
+                if (c.getValeur() < seuilmin || c.getValeur() > seuilmax)
+                    maliste.add(n);
+
+            }
+
         }
-
-        /*
-        JSONObject j = (JSONObject) jsonObj.get("data");
-
-        for (int i =0 ; i< j.length();i++)
-                list.add((JSONArray) j.getJSONArray(String.valueOf(i)));
-         List<Object> ma = new ArrayList<>();
-        for (int i =0 ; i< list.size();i++)
-            ma.add(list.get(i).toList());
-
-
-
-        for ( Object e: ma) {
-
-            System.out.println(((ArrayList) e));
-        }
-
-        /*for (int i=0 ; i<a.length();i++)
-            list.add(a.get(i).toString());
-        System.out.println(list);*/
-
-        return null;
-
-        //return capteurMesureService.saveCSV(data);
+        return maliste;
     }
 }
 

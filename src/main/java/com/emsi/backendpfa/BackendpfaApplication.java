@@ -29,9 +29,10 @@ public class BackendpfaApplication {
         return new BCryptPasswordEncoder();
     }
 
-
+    /*
     @Bean
-    CommandLineRunner start(AccountService accountService,MesureService mesureService){
+    CommandLineRunner start(AccountService accountService,MesureService mesureService,RegionService regionService,VilleService villeService,
+                            CapteurService capteurService){
 
 
         return args->{
@@ -39,6 +40,9 @@ public class BackendpfaApplication {
             accountService.save( new AppRole(2,"ADMIN"));
             accountService.save( new AppRole(3,"RESPONSABLE"));
             //mesureService.savemesure();
+
+
+            //mesureService.savemesure(new Mesure("Temperature","nombre"));
 
             Stream.of("user1","user2","user3","admin").forEach( un -> {
                 accountService.saveUser(un ,"1234","1234");
@@ -49,5 +53,5 @@ public class BackendpfaApplication {
 
 
         };
-    }
+    }*/
 }

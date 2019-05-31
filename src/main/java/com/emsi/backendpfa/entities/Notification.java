@@ -30,7 +30,7 @@ public class Notification {
 
 
     @Column
-    private String seuilmax;
+    private double seuilmax;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
