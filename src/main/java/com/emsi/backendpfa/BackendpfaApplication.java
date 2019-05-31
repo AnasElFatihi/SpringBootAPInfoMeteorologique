@@ -28,7 +28,7 @@ public class BackendpfaApplication {
         return new BCryptPasswordEncoder();
     }
 
-
+/*
     @Bean
     CommandLineRunner start(AccountService accountService,MesureService mesureService){
 
@@ -48,4 +48,6 @@ public class BackendpfaApplication {
 
         };
     }
+
+ */
 }
