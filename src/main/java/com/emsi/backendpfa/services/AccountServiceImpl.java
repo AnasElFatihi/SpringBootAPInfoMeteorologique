@@ -4,6 +4,7 @@ import com.emsi.backendpfa.dao.AppRoleRepository;
 import com.emsi.backendpfa.dao.AppUserRepository;
 import com.emsi.backendpfa.entities.AppRole;
 import com.emsi.backendpfa.entities.AppUser;
+import com.emsi.backendpfa.entities.Region;
 import com.emsi.backendpfa.entities.Ville;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +26,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private RegionService regionService;
 
     @Override
     public AppUser saveUser(String username, String password, String confirmedPassword) {
@@ -73,21 +77,18 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public AppUser updateUser(AppUser user, long id) {
-
-
-            AppUser villeEx = appUserRepository.getOne(id);
-            villeEx.setUsername(user.getUsername());
+            AppUser userEx = appUserRepository.getOne(id);
+            userEx.setUsername(user.getUsername());
             if( user.getPassword() != "")
             {
-                villeEx.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                userEx.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 System.out.println(user.getPassword());
             }
 
-            //villeEx.setRegions(viluserle.getRegions());
-        appUserRepository.save(villeEx);
-        System.out.println(villeEx);
-            return villeEx;
-
+            userEx.setRegion(user.getRegion());
+            appUserRepository.save(userEx);
+            System.out.println(userEx);
+            return userEx;
     }
 
     public AppUser findById(long id) {
@@ -96,7 +97,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AppUser saveUserR(String username, String password, String confirmedPassword) {
+    public AppUser saveUserR(String username, String password, String confirmedPassword, long id) {
+        Region region = regionService.findById(id);
+
         AppUser user = appUserRepository.findByUsername(username);
         if( user != null)
             throw new RuntimeException("User Already Exists");
@@ -107,8 +110,12 @@ public class AccountServiceImpl implements AccountService {
         appUser.setPassword(bCryptPasswordEncoder.encode(password));
         appUser.setActived(true);
 
+        appUser.setRegion(region);
+
         appUserRepository.save(appUser);
         addRoleToUser(username,"RESPONSABLE");
         return appUser;
     }
+
+
 }

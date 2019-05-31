@@ -33,32 +33,22 @@ public class RegionService {
         return regionRepository.findById(id).get();
     }
 
+
+
     public void deleteRegion(long id){
         regionRepository.deleteById(id);
     }
 
     public Region updateRegion(Region region, long id){
+
         Region regionEx = regionRepository.getOne(id);
         regionEx.setName(region.getName());
+        regionEx.setCapteurs(region.getCapteurs());
+        regionEx.setVille(region.getVille());
+        regionRepository.save(regionEx);
 
-        //regionEx.setVille(region.getVille());
-
-        return regionRepository.findById(regionEx.getId()).get();
-    }
-/*
-    public Region saveRegion(Region region)
-    {
-        regionRepository.save(region);
-        return region;
-    }
-    public List<Region> getAll(){
-        return regionRepository.findAll();
+        return regionEx;
     }
 
-    public Optional<Region> findByID(long id) {
-        //return regionRepository.findByNom(name);
-        return regionRepository.findById(id);
-    }
-*/
 
 }

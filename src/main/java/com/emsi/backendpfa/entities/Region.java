@@ -29,14 +29,23 @@ public class Region  {
     @Column(name = "name")
     private String name;
 
-
+    /*
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
     private Collection<AppUser> users = new ArrayList<>();
+     */
    // @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ville_id")
     private Ville ville;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
+    private Set<Capteur> capteurs = new HashSet<>();
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
+    private Set<AppUser> users = new HashSet<>();
 
     //@JsonIgnore
     //@OneToMany(mappedBy = "region", cascade = CascadeType.ALL)

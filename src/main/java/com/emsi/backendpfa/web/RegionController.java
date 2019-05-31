@@ -28,6 +28,11 @@ public class RegionController {
         return regionService.getAll();
     }
 
+    @GetMapping("/{id}")
+    public Region getRegion(@PathVariable long id){
+        return regionService.findById(id);
+    }
+
     @PostMapping("/{id}")
     public Region saveRegion(@RequestBody Region region, @PathVariable long  id){
         Ville ville = villeService.findById(id);

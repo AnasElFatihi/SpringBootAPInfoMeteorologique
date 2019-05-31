@@ -3,8 +3,10 @@ package com.emsi.backendpfa.web;
 import com.emsi.backendpfa.dao.CapteurRepository;
 import com.emsi.backendpfa.dao.VilleRepository;
 import com.emsi.backendpfa.entities.Capteur;
+import com.emsi.backendpfa.entities.Region;
 import com.emsi.backendpfa.entities.Ville;
 import com.emsi.backendpfa.services.CapteurService;
+import com.emsi.backendpfa.services.RegionService;
 import com.emsi.backendpfa.services.VilleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,24 +24,34 @@ public class CapteurController {
     @Autowired
     private CapteurService capteurService;
 
+    @Autowired
+    private RegionService regionService;
+
     @GetMapping("/all")
     public List<Capteur> getAll(){
         return capteurService.getAll();
     }
 
-    @PostMapping("/capteurs")
-    public Capteur saveCapteur(@RequestBody Capteur capteur){
+    @GetMapping("/{id}")
+    public Capteur getCapteur(@PathVariable long id){
+        return capteurService.findById(id);
+    }
 
+    @PostMapping("/{idcapt}")
+    public Capteur saveCapteur(@RequestBody Capteur capteur, @PathVariable long idcapt){
+        Region region = regionService.findById(idcapt);
+        capteur.setRegion(region);
         capteurService.saveCapteur(capteur);
         return capteurService.findById(capteur.getIdcapt());
     }
-    @PutMapping("/capteurs/{idcapt}")
-    public Capteur updateCapteur(@RequestBody Capteur capteur, @PathVariable long id)
+
+    @PutMapping("/{idcapt}")
+    public Capteur updateCapteur(@RequestBody Capteur capteur, @PathVariable long idcapt)
     {
-        return capteurService.updateCapteur(capteur,id);
+        return capteurService.updateCapteur(capteur,idcapt);
     }
 
-    @DeleteMapping("/capteurs/{idcapt}")
+    @DeleteMapping("/{idcapt}")
     public void deletecapteur(@PathVariable long  idcapt){
         capteurService.deleteCapteur(idcapt);
     }
