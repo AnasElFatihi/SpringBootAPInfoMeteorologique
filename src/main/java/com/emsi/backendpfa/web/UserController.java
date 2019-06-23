@@ -63,6 +63,12 @@ public class UserController {
     public AppUser registerResponsable(@RequestBody UserForm user, @PathVariable long id){
         return accountService.saveUserR(user.getUsername(),user.getPassword(),user.getRepassword(),id);
     }
+
+    @GetMapping("/getregion/{id}")
+    public Region getUserRegion(@PathVariable String id){
+        return accountServiceimpl.loadRegion(id);   //
+    }
+
 }
 
 @Data

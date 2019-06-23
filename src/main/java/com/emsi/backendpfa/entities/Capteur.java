@@ -13,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 //@ToString
+@Table
 public class Capteur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

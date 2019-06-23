@@ -118,4 +118,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
+    public Region loadRegion(String id) {
+
+        return appUserRepository.findByUsername(id).getRegion();
+    }
 }

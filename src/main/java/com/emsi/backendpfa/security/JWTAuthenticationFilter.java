@@ -2,8 +2,11 @@ package com.emsi.backendpfa.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.emsi.backendpfa.dao.AppUserRepository;
 import com.emsi.backendpfa.entities.AppUser;
+import com.emsi.backendpfa.services.AccountServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -25,6 +28,8 @@ import java.util.List;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;
+
+
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager)
     {
@@ -48,15 +53,20 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         User user = (User) authResult.getPrincipal();
+
         List<String> roles = new ArrayList<>();
         authResult.getAuthorities().forEach( a ->{
             roles.add(a.getAuthority());
         });
+
+
+
+
         String jwt = JWT.create()
                 .withIssuer(request.getRequestURI())
                 .withSubject(user.getUsername())
-
                 .withArrayClaim("roles", roles.toArray(new String[roles.size()]))
+                //.withClaim("regions",user.get)
                 .withExpiresAt(new Date(System.currentTimeMillis()+SecurityParams.EXPIRATION))
                 .sign(Algorithm.HMAC256(SecurityParams.SECRET));
         response.addHeader(SecurityParams.HEADER_NAME,jwt);

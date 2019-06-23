@@ -53,7 +53,7 @@ public class CapteurMesureController {
             JSONObject j = (JSONObject) a.get(i);
 
             CapteurMesure c = new CapteurMesure();
-            DateFormat df = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
+            DateFormat df = new SimpleDateFormat("dd-mm-yyyy", Locale.FRANCE);
             Date result = df.parse(j.getString("date"));
             c.setDate(result);
             c.setValeur(j.getDouble("valeur"));
