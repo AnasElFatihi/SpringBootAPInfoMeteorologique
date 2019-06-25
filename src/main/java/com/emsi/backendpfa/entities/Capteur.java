@@ -36,5 +36,4 @@ public class Capteur {
     private Set<CapteurMesure> capteursmesures = new HashSet<>();
 
 
-
 }

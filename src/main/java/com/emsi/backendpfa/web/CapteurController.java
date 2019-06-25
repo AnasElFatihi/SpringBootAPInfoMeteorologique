@@ -45,6 +45,14 @@ public class CapteurController {
         return capteurService.findById(capteur.getIdcapt());
     }
 
+    @PostMapping("/capteurresponsable/{id}")
+    public Capteur saveCapteur(@RequestBody Capteur capteur, @PathVariable String id){
+        Region region = regionService.findByName(id);
+        capteur.setRegion(region);
+        capteurService.saveCapteur(capteur);
+        return capteurService.findById(capteur.getIdcapt());
+    }
+
     @PutMapping("/{idcapt}")
     public Capteur updateCapteur(@RequestBody Capteur capteur, @PathVariable long idcapt)
     {

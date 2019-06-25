@@ -11,5 +11,6 @@ import java.io.Serializable;
 @RepositoryRestResource
 public interface RegionRepository extends JpaRepository<Region,Long>, Serializable {
 
+    Region findByName(String a);
 
 }

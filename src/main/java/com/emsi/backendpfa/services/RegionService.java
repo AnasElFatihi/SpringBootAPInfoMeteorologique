@@ -51,4 +51,7 @@ public class RegionService {
     }
 
 
+    public Region findByName(String id) {
+        return regionRepository.findByName(id);
+    }
 }

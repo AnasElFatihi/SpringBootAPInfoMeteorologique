@@ -20,8 +20,9 @@ public class CapteurService {
 
 
     public Capteur saveCapteur(Capteur capteur){
-       /* Capteur a = new Capteur();
-        a.setLibelle(capteur.getLibelle());
+
+        Capteur a = new Capteur();
+        /* a.setLibelle(capteur.getLibelle());
         a.setEtat(capteur.getEtat());
         a.setDateinstall(capteur.getDateinstall());
         a.setMarque(capteur.getMarque());
@@ -31,7 +32,6 @@ public class CapteurService {
         return a;
         */
         return capteurRepository.save(capteur);
-
     }
 
     public List<Capteur> getAll(){
