@@ -30,4 +30,12 @@ public class StatService {
         return  capteurMesureRepository.getDataParregion(id);
 
     }
+
+    public List getAlldata() {
+        return capteurMesureRepository.getAllData();
+    }
+
+    public List getRegionCapteurs(long id) {
+        return capteurMesureRepository.getcapteurRegion(id);
+    }
 }

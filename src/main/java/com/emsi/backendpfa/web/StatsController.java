@@ -26,4 +26,13 @@ public class StatsController  {
         //return new ArrayList();
         return  statService.getDataParRegion(id);
     }
+
+    @GetMapping("/allregions")
+    public List getAllData(){
+        return statService.getAlldata();
+    }
+    @GetMapping("/regions/{id}")
+    public List getRegionCapteurs(@PathVariable long id){
+        return statService.getRegionCapteurs(id);
+    }
 }
